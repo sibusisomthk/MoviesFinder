@@ -1,3 +1,59 @@
-.movies-view{
-    
+
+.toggle-view {
+  display: inline-flex;
+  border: solid 0.5px;
+  border-radius: 10px;
+  min-width: fit-content;
+  padding: 5px;
+  width: 80px;
+  justify-content: center;
+  align-self: flex-start;
+  background-color: white;
+}
+.view {
+  width: 24px;
+  height: 24px;
+}
+.view:hover{
+    cursor: pointer;
+    background-color: #f4f4f4;;
+}
+.view.active {
+  width: 24px;
+  height: 24px;
+}
+.view.active:hover{
+    cursor: pointer;
+    background-color: #f4f4f4;;
+}
+.list{
+    display: inline-flex;
+    width: 100%;
+}
+.img{
+    width: 200px;
+    height: 200px;
+}
+.title{
+    font-weight: bolder;
+    font-size: 15px;
+    text-align: center;
+}
+.image-container{
+    display: flex;
+    justify-content: center; 
+}
+.list-group{
+    width: 100%;
+    margin-top: 5px;
+}
+.card-img-top{
+    height: 250px;
+}
+.card{
+    height: 100%;
+    margin: 5px;
+}
+.modal-dialog{
+    min-width: 90%;
 }

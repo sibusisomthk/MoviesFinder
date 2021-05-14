@@ -12,17 +12,35 @@ export interface ICast {
 export interface ISpecItem{
     item?:string[];
 }
-export interface IMovie {
-    id?: string;
-    title?: string;
-    year?: string;
-    length?: string;
-    rating?: number;
+export interface ITitleInfor {
+    imdbID?:string;
+    Title?: string;
+    Year?: string;
+    Rated?: string;
+    Released?: number;
     rating_votes?: number;
-    poster?: string;
-    plot?:string;
-    trailer?:ITrailer;
-    cast?:ICast[];
-    technicalSpecs?:ISpecItem[];
+    Runtime?: string;
+    Genre?:string;
+    Director?:string;
+    Poster?:string;
+    Plot?:string;
+    imdbRating?:string;
+    BoxOffice?:string;
+    Production?:string;
+    Actors?:string;
 
+
+}
+export interface ITitle{
+    imdbID?:string;
+    Title?:string;
+    Type?:string;
+    Year?:string;
+    Poster?:string;
+}
+export interface ISearchResults{
+    Search?:ITitle[];
+    Response?:boolean;
+    totalResults?:number;
+    Error?:string
 }
