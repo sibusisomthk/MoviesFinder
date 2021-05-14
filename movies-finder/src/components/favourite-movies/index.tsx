@@ -1,6 +1,6 @@
 import './styles.css';
 import React, { FC, useEffect, useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { getFavouriteMovies } from '../../helpers/localStorageData';
 import MoviesView from '../movies-container';
 import { ITitle } from '../../apis/movie';
@@ -13,12 +13,16 @@ const FavouriteMovies: FC<IProps> = () => {
   useEffect(() => {
     setMovies(getFavouriteMovies());
   }, []);
+  const OnRefresh=()=>{
+    setMovies(getFavouriteMovies());
+  }
 
  
   return (
     <Container className='favourite-movies-view'>
       <Row>
       <Col> {movies.length>0 && <div> You have <strong>{movies.length}</strong> favourite movies </div>}</Col>
+      <Col ><Button variant='secondary' onClick={()=>OnRefresh()}>Refresh</Button></Col>
       </Row>
       <Row>
       <MoviesView moviesList={movies} />
