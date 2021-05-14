@@ -14,6 +14,7 @@ const FavouriteMovies: FC<IProps> = () => {
     setMovies(getFavouriteMovies());
   }, []);
   const OnRefresh=()=>{
+    console.log('refresh triggered')
     setMovies(getFavouriteMovies());
   }
 
@@ -25,7 +26,7 @@ const FavouriteMovies: FC<IProps> = () => {
       <Col ><Button variant='secondary' onClick={()=>OnRefresh()}>Refresh</Button></Col>
       </Row>
       <Row>
-      <MoviesView moviesList={movies} />
+      <MoviesView moviesList={movies} isFavouriteList={true} refreshList={()=>OnRefresh()}/>
       </Row>
 
     </Container>

@@ -33,3 +33,8 @@ export function saveToFavouriteMovies(title: ITitle) {
         localStorage.setItem('favouriteTiles', JSON.stringify(tempData));
     }
 }
+
+//save updatedlist to local storage
+export function saveFavouriteMovies(titles: ITitle[]){
+    localStorage.setItem('favouriteTiles', JSON.stringify(titles));
+}

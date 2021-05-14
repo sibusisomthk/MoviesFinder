@@ -11,7 +11,7 @@ const FindMovies: FC<IProps> = () => {
   const [search, setSearchValue] = useState('');
   const [isSearchLoading, setSearchLoading] = useState(false);
   const [movies,setMovies] = useState<ITitle[]>([]);
-  
+
   useEffect(() => {
   }, [movies]);
   const updateState=(loading:boolean,movieslist?:ITitle[])=>{
@@ -21,7 +21,7 @@ const FindMovies: FC<IProps> = () => {
   const onSearch = ()=>{
     searchMovies(search,1,updateState);
   }
-  const renderMovies =()=> movies && <MoviesView moviesList={movies}/>;
+  const renderMovies =()=> movies && <MoviesView moviesList={movies} isFavouriteList={false}/>;
   return (
     <Container className='find-movies-view'>
       <Row>

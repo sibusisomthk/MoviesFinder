@@ -13,7 +13,7 @@ export interface ISpecItem{
     item?:string[];
 }
 export interface ITitleInfor {
-    imdbID?:string;
+    imdbID:string;
     Title?: string;
     Year?: string;
     Rated?: string;

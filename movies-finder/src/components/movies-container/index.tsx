@@ -4,27 +4,38 @@ import { Button, Card, CardImg, Col, Container, ListGroup, ListGroupItem, Modal,
 import { View } from '../../enums/view';
 import { ITitle, ITitleInfor } from '../../apis/movie';
 import { fetchMovie } from '../../services/rapidApiService';
-import { saveToFavouriteMovies } from '../../helpers/localStorageData';
+import { saveFavouriteMovies, saveToFavouriteMovies } from '../../helpers/localStorageData';
 import MovieInfor from '../movie-information';
+import { isConditionalExpression } from 'typescript';
 
 interface IProps {
   moviesList: ITitle[];
+  isFavouriteList:boolean;
+  refreshList?:Function;
 }
 
-const MoviesView: FC<IProps> = ({ moviesList}) => {
+const MoviesView: FC<IProps> = ({ moviesList,isFavouriteList,refreshList}) => {
 
   const [view, setView] = useState<View>(View.List);
   const [activeTitle, setActiveTitle] = useState<ITitleInfor|null>(null)
   const [isLoading,setLoading] =useState(false);
   const updateState = (loading: boolean,title?: ITitleInfor) => {
-    
- console.log('loading',loading)
+
     setLoading(loading);
     title && setActiveTitle(title);
   }
-
   const getMovieInfor = (id: string) => {
     fetchMovie(id, updateState);
+  }
+  const onRemoveFromFavourite = (id:string) =>{
+    var list = moviesList.filter((title)=>{
+      return title?.imdbID !== id;
+    })
+    //savelist to localStorage
+    saveFavouriteMovies(list);
+    setActiveTitle(null);
+    //triger refresh
+    if(refreshList)refreshList();
   }
   const onAddToFavourite = (id?:string) =>{
     if(!id)return;
@@ -85,7 +96,8 @@ const MoviesView: FC<IProps> = ({ moviesList}) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={()=>setActiveTitle(null)}>Close</Button>
-          <Button variant='primary' onClick={()=>onAddToFavourite(activeTitle?.imdbID)}>Add to Favourite</Button>
+          {isFavouriteList ? <Button variant='warning' onClick={()=>onRemoveFromFavourite(activeTitle?.imdbID)}>Remove From Favourite</Button>:
+                             <Button variant='primary' onClick={()=>onAddToFavourite(activeTitle?.imdbID)}>Add to Favourite</Button>}
         </Modal.Footer>
 
       </Modal>}
