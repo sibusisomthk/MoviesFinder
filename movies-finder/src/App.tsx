@@ -7,22 +7,20 @@ interface IProps { }
 
 const App: FC<IProps> = () => {
   const [loading, setLoading] = useState(false);
+  console.log('loading',loading)
   return (
     <div className='App'>
       <header className='App-header'>
         IMDB Movies
       </header>
-      {loading ? <Spinner animation="border" role="status">
-        <span className="sr-only">Loading...</span>
-      </Spinner> :
         <Tabs defaultActiveKey='FindMoviesTab' id='uncontrolled-tab-example'>
           <Tab eventKey='FindMoviesTab' title='Find Movies'>
-            <FindMovies setLoading={() => setLoading} />
+            <FindMovies />
           </Tab>
           <Tab eventKey='FavouriteMoviesTab' title='Favourite Movies'>
-            <FavouriteMovies setLoading={() => setLoading} />
+            <FavouriteMovies />
           </Tab>
-        </Tabs>}
+        </Tabs>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import './styles.css';
-import { FC, useState } from 'react';
-import { Button, Card, CardImg, Col, Container, ListGroup, ListGroupItem, Modal, Row } from 'react-bootstrap';
+import React, { FC, useState } from 'react';
+import { Button, Card, CardImg, Col, Container, ListGroup, ListGroupItem, Modal, Row, Spinner } from 'react-bootstrap';
 import { View } from '../../enums/view';
 import { ITitle, ITitleInfor } from '../../apis/movie';
 import { fetchMovie } from '../../services/rapidApiService';
@@ -9,18 +9,21 @@ import MovieInfor from '../movie-information';
 
 interface IProps {
   moviesList: ITitle[];
-  setLoading:Function;
 }
-const MoviesView: FC<IProps> = ({ moviesList ,setLoading}) => {
+
+const MoviesView: FC<IProps> = ({ moviesList}) => {
 
   const [view, setView] = useState<View>(View.List);
   const [activeTitle, setActiveTitle] = useState<ITitleInfor|null>(null)
+  const [isLoading,setLoading] =useState(false);
   const updateState = (loading: boolean,title?: ITitleInfor) => {
+    
+ console.log('loading',loading)
     setLoading(loading);
     title && setActiveTitle(title);
   }
 
-  const getImage = (id: string) => {
+  const getMovieInfor = (id: string) => {
     fetchMovie(id, updateState);
   }
   const onAddToFavourite = (id?:string) =>{
@@ -29,12 +32,11 @@ const MoviesView: FC<IProps> = ({ moviesList ,setLoading}) => {
     if(title)saveToFavouriteMovies(title);
     setActiveTitle(null);
   }
-
   //list view
   const listView = (<ListGroup> {moviesList &&
     moviesList.map((title, i) => {
       //@ts-ignore
-      return (<ListGroupItem key={i} onClick={() => getImage(title?.imdbID)}>
+      return (<ListGroupItem key={i} onClick={() => getMovieInfor(title?.imdbID)}>
         <div className='image-container'><img alt='movie poster' style={{ width: '200px', height: '200px' }} src={title?.Poster} /></div>
         <div className='title'>{title?.Title}</div>
       </ListGroupItem>)
@@ -44,7 +46,7 @@ const MoviesView: FC<IProps> = ({ moviesList ,setLoading}) => {
   const cardView = (<Row md={4} > {moviesList &&
     moviesList.map((title, i) => {
       //@ts-ignore
-      return (<Col sm={3} key={i} onClick={() => getImage(title?.imdbID)}>
+      return (<Col sm={3} key={i} onClick={() => getMovieInfor(title?.imdbID)}>
         <Card>
           <CardImg variant='top' src={title?.Poster} />
           <Card.Body>
@@ -57,7 +59,7 @@ const MoviesView: FC<IProps> = ({ moviesList ,setLoading}) => {
     })}</Row>);
 
   return (
-
+    
     <Container className='movies-view'>
       {activeTitle && <Modal show={activeTitle!==null} >
         <Modal.Header>
@@ -91,6 +93,7 @@ const MoviesView: FC<IProps> = ({ moviesList ,setLoading}) => {
           </div>
         </Col>
       </Row>
+       {isLoading && <Spinner animation="grow" />}
       <Row>
         {view === View.List && listView}
       </Row>

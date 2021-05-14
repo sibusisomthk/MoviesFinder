@@ -1,6 +1,5 @@
 import { ISearchResults, ITitleInfor } from "../apis/movie";
 import { IMDB_BASE_URL, IMDB_X_RAPIDAPI_HOST, IMDB_X_RAPIDAPI_KEY } from "../constants/imdbData";
-import { ResponseStatus } from "../enums/httpResponseStatus";
 
 //prepare header options
 function GetHeaderOptions() {
@@ -23,11 +22,11 @@ export function fetchMovie(id: string,updatedStates:Function) {
             console.log('data',data)
             updatedStates(false,data);
             }else{
-                updatedStates(true,ResponseStatus.ServerError);
+                updatedStates(true);
             }
         }).catch(error=>{
             console.log('error',error);
-            updatedStates(true,ResponseStatus.ServerError);
+            updatedStates(true);
         });
 }
 

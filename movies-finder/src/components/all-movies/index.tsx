@@ -1,15 +1,14 @@
 import './styles.css';
-import { FC, useEffect, useState } from 'react';
-import { Col, Container, FormControl, Row } from 'react-bootstrap';
+import React, { FC, useEffect, useState } from 'react';
+import { Col, Container, FormControl, Row, Spinner } from 'react-bootstrap';
 import { searchMovies } from '../../services/rapidApiService';
 import { ITitle } from '../../apis/movie';
 import { getSearchResults } from '../../helpers/localStorageData';
 import MoviesView from '../movies-container';
 
 interface IProps {
-  setLoading:Function;
 }
-const FindMovies: FC<IProps> = ({setLoading}) => {
+const FindMovies: FC<IProps> = () => {
   const [search, setSearchValue] = useState('');
   const [isSearchLoading, setSearchLoading] = useState('');
   const [movies,setMovies] = useState<ITitle[]>([]);
@@ -18,7 +17,7 @@ const FindMovies: FC<IProps> = ({setLoading}) => {
   }, []);
   
   useEffect(() => {
-    setLoading(isSearchLoading)
+    console.log('arived',isSearchLoading)
     setMovies(getSearchResults())
   }, [isSearchLoading]);
 
@@ -47,7 +46,8 @@ const FindMovies: FC<IProps> = ({setLoading}) => {
       </Row>
       
       <Row>
-      <MoviesView moviesList={movies} setLoading={setLoading}/>
+      {isSearchLoading? <Spinner animation="border" />:
+      <MoviesView moviesList={movies}/>}
       </Row>
     </Container>
   );

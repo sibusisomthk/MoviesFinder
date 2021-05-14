@@ -6,9 +6,8 @@ import MoviesView from '../movies-container';
 import { ITitle } from '../../apis/movie';
 
 interface IProps {
-  setLoading:Function;
 }
-const FavouriteMovies: FC<IProps> = ({setLoading}) => {
+const FavouriteMovies: FC<IProps> = () => {
 
   const [movies,setMovies] = useState<ITitle[]>([]);
   useEffect(() => {
@@ -22,7 +21,7 @@ const FavouriteMovies: FC<IProps> = ({setLoading}) => {
       <Col> {movies.length>0 && <div> You have <strong>{movies.length}</strong> favourite movies </div>}</Col>
       </Row>
       <Row>
-      <MoviesView moviesList={movies} setLoading={setLoading}/>
+      <MoviesView moviesList={movies} />
       </Row>
 
     </Container>
