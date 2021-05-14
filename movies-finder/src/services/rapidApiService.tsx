@@ -43,19 +43,22 @@ export function searchMovies(name: string,page:number,updatedStates:Function) {
               const data = await response.json() as ISearchResults;
               console.log('data',data)
               
-              updatedStates(false);
+              
               if(!data?.Response && data?.Error){
-                localStorage.setItem('searchedTiles', JSON.stringify([]));
+                 updatedStates(false);
+                 console.log('arive1')
                   alert(data?.Error)
               }else{
-                localStorage.setItem('searchedTiles', JSON.stringify(data?.Search));
+                console.log('arive2')
+                updatedStates(false,data?.Search);
               }
             }else{
-                localStorage.setItem('searchedTiles', JSON.stringify([]));
+                console.log('arive3')
                 updatedStates(false);
+                console.log('An Unexpected Error occured');
             }
         }).catch(error=>{
-            console.log('error',error);
+            console.log('An Unexpected Error occured',error);
             updatedStates(false);
         });
 }

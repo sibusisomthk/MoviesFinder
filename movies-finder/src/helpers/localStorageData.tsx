@@ -3,16 +3,7 @@
 import { ITitle } from "../apis/movie";
 
 //get serach results from LocalStorage
-export function getSearchResults() {
-    try {
-        const data = localStorage.getItem('searchedTiles');
-        if (data) return JSON.parse(data) as ITitle[];
-        return [];
-    } catch (error) {
-        console.log('error', error)
-        return [];
-    }
-}
+
 //favourite movies from local storage
 export function getFavouriteMovies() {
 

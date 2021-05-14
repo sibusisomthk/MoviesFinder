@@ -1,7 +1,8 @@
 .App {
   text-align: center;
   background-color: #f4f4f4;
-  height: 100vh;
+  min-height: fit-content;
+  height: 100%;
 }
 .tab-content{
   margin-top: 10px;

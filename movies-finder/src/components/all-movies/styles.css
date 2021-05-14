@@ -1,5 +1,9 @@
 .find-movies-view{
     background: transparent;
-    text-align: left;
+    text-align: center;
 
+}
+
+.btn.btn-secondary{
+    min-width: 120px;
 }

@@ -1,4 +1,7 @@
 
+.movies-view.container{
+    margin-top: 10px;
+}
 .toggle-view {
   display: inline-flex;
   border: solid 0.5px;
@@ -56,4 +59,11 @@
 }
 .modal-dialog{
     min-width: 90%;
+}
+.th{
+    min-width: 50px;
+    text-align: center;
+}
+.toggle-view{
+    margin-bottom: 10px;
 }

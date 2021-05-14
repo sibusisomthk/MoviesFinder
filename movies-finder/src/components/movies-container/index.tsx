@@ -1,6 +1,6 @@
 import './styles.css';
 import React, { FC, useState } from 'react';
-import { Button, Card, CardImg, Col, Container, ListGroup, ListGroupItem, Modal, Row, Spinner } from 'react-bootstrap';
+import { Button, Card, CardImg, Col, Container, ListGroup, ListGroupItem, Modal, Row, Spinner, Table } from 'react-bootstrap';
 import { View } from '../../enums/view';
 import { ITitle, ITitleInfor } from '../../apis/movie';
 import { fetchMovie } from '../../services/rapidApiService';
@@ -33,14 +33,26 @@ const MoviesView: FC<IProps> = ({ moviesList}) => {
     setActiveTitle(null);
   }
   //list view
-  const listView = (<ListGroup> {moviesList &&
+  const listView =moviesList?.length > 0 && (<Table striped bordered hover size="sm">
+    <thead><tr>
+      <th>#</th>
+      <th>Poster</th>
+      <th>Title</th>
+      <th>Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    {moviesList &&
     moviesList.map((title, i) => {
       //@ts-ignore
-      return (<ListGroupItem key={i} onClick={() => getMovieInfor(title?.imdbID)}>
-        <div className='image-container'><img alt='movie poster' style={{ width: '200px', height: '200px' }} src={title?.Poster} /></div>
-        <div className='title'>{title?.Title}</div>
-      </ListGroupItem>)
-    })}</ListGroup>);
+      return (<tr key={i} onClick={() => getMovieInfor(title?.imdbID)}>
+        <th>{i}</th>
+        <th><div className='image-container'><img alt='movie poster' style={{ width: '200px', height: '200px' }} src={title?.Poster} /></div></th>
+        <th>{title?.Title}</th>
+        <th>{title?.Year}</th>
+      </tr>)
+    })}</tbody></Table>);
+    
   
     //card view
   const cardView = (<Row md={4} > {moviesList &&
@@ -98,6 +110,7 @@ const MoviesView: FC<IProps> = ({ moviesList}) => {
         {view === View.List && listView}
       </Row>
       {view === View.Card && cardView}
+      
     </Container>
   );
 };

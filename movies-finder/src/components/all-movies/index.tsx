@@ -1,36 +1,31 @@
 import './styles.css';
 import React, { FC, useEffect, useState } from 'react';
-import { Col, Container, FormControl, Row, Spinner } from 'react-bootstrap';
+import { Button, Col, Container, FormControl, Row, Spinner } from 'react-bootstrap';
 import { searchMovies } from '../../services/rapidApiService';
 import { ITitle } from '../../apis/movie';
-import { getSearchResults } from '../../helpers/localStorageData';
 import MoviesView from '../movies-container';
 
 interface IProps {
 }
 const FindMovies: FC<IProps> = () => {
   const [search, setSearchValue] = useState('');
-  const [isSearchLoading, setSearchLoading] = useState('');
+  const [isSearchLoading, setSearchLoading] = useState(false);
   const [movies,setMovies] = useState<ITitle[]>([]);
-  useEffect(() => {
-    setMovies(getSearchResults())
-  }, []);
   
   useEffect(() => {
-    console.log('arived',isSearchLoading)
-    setMovies(getSearchResults())
-  }, [isSearchLoading]);
-
-  useEffect(() => {
-    if(search){
-      searchMovies(search,1,setSearchLoading);
-    }
-  }, [search]);
-
+  }, [movies]);
+  const updateState=(loading:boolean,movieslist?:ITitle[])=>{
+    if(movieslist)setMovies(movieslist);
+    setSearchLoading(loading);
+  }
+  const onSearch = ()=>{
+    searchMovies(search,1,updateState);
+  }
+  const renderMovies =()=> movies && <MoviesView moviesList={movies}/>;
   return (
     <Container className='find-movies-view'>
       <Row>
-        <Col sm={8}>
+        <Col sm={9}>
           <FormControl 
             type='text'
             name='search'
@@ -39,6 +34,7 @@ const FindMovies: FC<IProps> = () => {
             onChange={(e)=>setSearchValue(e.target.value)}
           />
         </Col>
+        <Col sm={3}><Button variant="secondary" onClick={()=>onSearch()} >Search</Button></Col>
        
       </Row>
       <Row>
@@ -47,7 +43,7 @@ const FindMovies: FC<IProps> = () => {
       
       <Row>
       {isSearchLoading? <Spinner animation="border" />:
-      <MoviesView moviesList={movies}/>}
+      (renderMovies())}
       </Row>
     </Container>
   );
